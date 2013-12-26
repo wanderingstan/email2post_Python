@@ -3,7 +3,7 @@ e2p_config.py
 config.py
 venv-email2post*
 venv.sh
-.htaccess 
+*.htaccess 
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
