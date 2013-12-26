@@ -14,9 +14,23 @@ cgitb.enable()
 
 form = cgi.FieldStorage()
 
-message=""
+#
+# Save the email
+#
+from time import gmtime, strftime
 
-# get the fileitem
+datetime = strftime("%Y-%m-%dT%H-%M-%SZ", gmtime())
+filename = "%s.txt" % (datetime) # e.g. 2014-06-06T12-05-30Z_joe
+
+f = open(os.path.join(config['FILE_STORAGE_PATH'],filename), 'w')
+if 'body-plain' in form:
+    f.write(form['body-plain'].value)
+f.close()
+
+
+#
+# Get attached file
+#
 if 'userfile' in form:
     fileitem=form['userfile']
     if fileitem.file:
@@ -46,9 +60,9 @@ Content-Type: text/html\n
 </body></html>
 """ % (message,)
 
-# body-plain
-#
-f = open('email.log', 'a')
+# Debug log
+f = open(os.path.join(config['FILE_STORAGE_PATH'],'email.log'), 'a')
 if 'mailbox' in form:
     f.write(message)
 f.close()
+
